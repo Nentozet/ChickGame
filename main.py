@@ -8,7 +8,6 @@ from Wait import wait
 from Egg import Egg
 from ButtonTypes import Button
 import Saving
-import time
 
 pygame.init()
 
@@ -51,22 +50,14 @@ ice_Group = pygame.sprite.Group()
 spikes_Group = pygame.sprite.Group()
 mainButts_Group = pygame.sprite.Group()
 levelButts_Group = pygame.sprite.Group()
-settingButts_Group = pygame.sprite.Group()
-settings_sliders_Group = pygame.sprite.Group()
 
 play_button = Button(mainButts_Group, 'Играть!', 1)
-settings_button = Button(mainButts_Group, 'Настройки', 2)
-quit_button = Button(mainButts_Group, 'Выйти', 3)
+quit_button = Button(mainButts_Group, 'Выйти', 2)
 
 level1_button = Button(levelButts_Group, '1 уровень', 1)
 level2_button = Button(levelButts_Group, '2 уровень', 2)
 level3_button = Button(levelButts_Group, '3 уровень', 3)
 
-settings_Back_button = Button(settingButts_Group, 'Назад', 1)
-musicvolume_setts_button = Button(settingButts_Group, 'Громкость музыки', 2)
-soundeffect_volume_setts_button = Button(settingButts_Group, 'Громкость эффектов', 3)
-
-music_volume_slider_exist = soundeffect_volume_slider_exist = False
 level = pygame.Surface((W, H))
 level.blit(skyimg, (0, 0))
 
@@ -132,30 +123,18 @@ def select_level_draw():
     pygame.display.update()
 
 
-def settings_draw():
-    settingButts_Group.update(curbutt_num)
-    sc.blit(skyimg, (0, 0))
-    sc.blit(title, (W - 510, H // 4 - 105))
-    pygame.draw.line(sc, BLACK, (W - 510, H // 4 - 25), (W - 175, H // 4 - 25), 5)
-    sc.blit(GameName, (50, 20))
-    sc.blit(menuChick, (150, H - 250))
-    settingButts_Group.draw(sc)
-    settings_sliders_Group.draw(sc)
-    pygame.display.update()
-
-
 def clear_level():
     platform_Group.empty()
     spikes_Group.empty()
     egg_Group.empty()
-    level.blit(skyimg, 0, 0)
+    level.blit(skyimg, (0, 0))
 
 
 mode = 'Main Menu'
 curbutt_num = 1
 title = titleFont.render('Главное меню', True, BLACK)
 GameName = nameFont.render('Chick Game', True, GREEN)
-
+level_file = ''
 while True:
     """Игра"""
     while mode == 'Game':
@@ -177,7 +156,6 @@ while True:
                 hero.x = nest_rect.x + nest_rect.width // 4
                 hero.y = nest_rect.y - nest_rect.height // 2
                 hero.xspeed, hero.yspeed = 0, 0
-                print('die')
                 break
         for egg in egg_Group:
             if egg.rect.colliderect(hero.rect):
@@ -212,11 +190,6 @@ while True:
                         title = titleFont.render('Выбор уровня', True, BLACK)
                         mode = 'Select Level'
                         wait(1)
-                        break
-                    if settings_button.num == curbutt_num:
-                        curbutt_num = 1
-                        title = titleFont.render('Настройки', True, BLACK)
-                        mode = 'Settings'
                         break
                     if quit_button.num == curbutt_num:
                         exit()
@@ -257,55 +230,3 @@ while True:
                     mode = 'Game'
                     wait(1)
                     break
-    """Настройки"""
-    while mode == 'Settings':
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_s:
-                    if curbutt_num == len(settingButts_Group):
-                        curbutt_num = 1
-                    else:
-                        curbutt_num += 1
-                if event.key == pygame.K_w:
-                    if curbutt_num == 1:
-                        curbutt_num = len(settingButts_Group)
-                    else:
-                        curbutt_num -= 1
-                if event.key == pygame.K_SPACE:
-                    if settings_Back_button.num == curbutt_num:
-                        curbutt_num = 2
-                        title = titleFont.render('Главное меню', True, BLACK)
-                        mode = 'Main Menu'
-                        break
-                    if musicvolume_setts_button.num == curbutt_num:
-                        music_volume_slider_exist = True
-                    if soundeffect_volume_setts_button.num == curbutt_num:
-                        soundeffect_volume_slider_exist = True
-        if music_volume_slider_exist:
-            wait(1)
-            musicvolume_setts_button.kill()
-            while music_volume_slider_exist:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        exit()
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_SPACE:
-                            musicvolume_setts_button.add(settingButts_Group)
-                            music_volume_slider_exist = False
-                settings_draw()
-        if soundeffect_volume_slider_exist:
-            wait(1)
-            soundeffect_volume_setts_button.kill()
-            while soundeffect_volume_slider_exist:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        exit()
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_SPACE:
-                            soundeffect_volume_setts_button.add(settingButts_Group)
-                            soundeffect_volume_slider_exist = False
-                settings_draw()
-        settings_draw()
-        clock.tick(FPS)
