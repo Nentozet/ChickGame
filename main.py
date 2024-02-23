@@ -6,7 +6,7 @@ from Spike import Spike
 from Chick import Chick
 from Wait import wait
 from Egg import Egg
-from ButtonTypes import Button
+from Button import Button
 import Saving
 
 pygame.init()
