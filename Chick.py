@@ -27,8 +27,6 @@ class Chick(pygame.sprite.Sprite):
         self.flyright1 = scale(pygame.image.load('Assets/Images/chickflyrightst1.png').convert_alpha())
         self.flyright2 = scale(pygame.image.load('Assets/Images/chickflyrightst2.png').convert_alpha())
         self.flyright3 = scale(pygame.image.load('Assets/Images/chickflyrightst3.png').convert_alpha())
-        self.deadchick = scale(pygame.image.load('Assets/Images/Chickdeatheffect.png').convert_alpha())
-        self.chicksound = pygame.mixer.Sound('Assets/Sounds/Papapapapapa.mp3')
 
         self.chickimage = self.chickright
         self.on_ice = 0
