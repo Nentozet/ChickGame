@@ -6,6 +6,10 @@ W, H = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
 pygame.init()
 
 
+def scale(img):
+    return pygame.transform.scale(img, (60, 65))
+
+
 class Chick(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
@@ -47,10 +51,6 @@ class Chick(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(bottomleft=(self.x, 0))
 
         self.mask = pygame.mask.from_surface(self.chickimage)
-
-    @staticmethod
-    def scale(self, img):
-        return pygame.transform.scale(img, (60, 65))
 
     def collide_horizontal(self, platforms):
         k = 0
