@@ -5,6 +5,7 @@ user32 = ctypes.windll.user32
 W, H = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
 pygame.init()
 
+
 class Chick(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
@@ -41,13 +42,13 @@ class Chick(pygame.sprite.Sprite):
         self.y = y
         self.on_ground = False
 
-
         pygame.sprite.Sprite.__init__(self)
         self.image = self.chickimage
         self.rect = self.image.get_rect(bottomleft=(self.x, 0))
 
         self.mask = pygame.mask.from_surface(self.chickimage)
 
+    @staticmethod
     def scale(self, img):
         return pygame.transform.scale(img, (60, 65))
 
@@ -191,7 +192,6 @@ class Chick(pygame.sprite.Sprite):
         self.collide_horizontal(platforms)
         self.x += self.xspeed
 
-
         if self.rect.bottom != self.ground:
             self.on_ground = False
             self.on_ice = False
@@ -289,5 +289,3 @@ class Chick(pygame.sprite.Sprite):
                     self.chickimage = self.chickjumpleft
 
         self.mask = pygame.mask.from_surface(self.chickimage)
-
-
