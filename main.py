@@ -28,8 +28,6 @@ titleFont = pygame.font.SysFont('comicsansms', 48)
 nameFont = pygame.font.SysFont('comicsansms', 96)
 
 effectsvolume, musicvolume = Saving.volumesettings_load()
-pygame.mixer.music.load('Assets/Sounds/Grass.mp3')
-pygame.mixer.music.set_volume(musicvolume)
 
 skyimg = pygame.image.load('Assets/Images/sky.png').convert_alpha()
 skyimg = pygame.transform.scale(skyimg, (W, H))
@@ -126,7 +124,7 @@ def play_music(game_mode):
     if game_mode == 'Game':
         pygame.mixer.music.load('Assets/Sounds/Game_Music.mp3')
     elif game_mode == 'Main Menu':
-        pygame.mixer.music.load('Assets/Sounds/Grass.mp3')
+        pygame.mixer.music.load('Assets/Sounds/Main_Menu_Music.mp3')
     pygame.mixer.music.set_volume(musicvolume)
     pygame.mixer.music.play(-1)
 
@@ -138,8 +136,8 @@ def clear_level():
     level.blit(skyimg, (0, 0))
 
 
-pygame.mixer.music.play(-1)
 mode = 'Main Menu'
+play_music(mode)
 curbutt_num = 1
 title = titleFont.render('Главное меню', True, BLACK)
 GameName = nameFont.render('Chick Game', True, GREEN)
