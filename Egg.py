@@ -1,5 +1,7 @@
 import pygame
+
 pygame.init()
+
 
 class Egg(pygame.sprite.Sprite):
     def __init__(self, x, y, egg_list):
