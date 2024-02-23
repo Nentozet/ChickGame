@@ -1,8 +1,9 @@
 import pygame
+
 pygame.init()
 
-
 spike_size = 50
+
 
 class Spike(pygame.sprite.Sprite):
     def __init__(self, sx, sy, size, spikelist):
@@ -14,4 +15,3 @@ class Spike(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(bottomleft=(self.x, self.y))
         self.mask = pygame.mask.from_surface(self.image)
         self.add(spikelist)
-
