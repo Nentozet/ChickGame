@@ -34,7 +34,6 @@ pygame.mixer.music.set_volume(musicvolume)
 skyimg = pygame.image.load('Assets/Images/sky.png').convert_alpha()
 skyimg = pygame.transform.scale(skyimg, (W, H))
 
-pygame.mixer.music.play(-1)
 
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
@@ -123,6 +122,13 @@ def select_level_draw():
     levelButts_Group.draw(sc)
     pygame.display.update()
 
+def play_music(game_mode):
+    if game_mode == 'Game':
+        pygame.mixer.music.load('Assets/Sounds/Game_Music.mp3')
+    elif game_mode == 'Main Menu':
+        pygame.mixer.music.load('Assets/Sounds/Grass.mp3')
+    pygame.mixer.music.set_volume(musicvolume)
+    pygame.mixer.music.play(-1)
 
 def clear_level():
     platform_Group.empty()
@@ -131,6 +137,7 @@ def clear_level():
     level.blit(skyimg, (0, 0))
 
 
+pygame.mixer.music.play(-1)
 mode = 'Main Menu'
 curbutt_num = 1
 title = titleFont.render('Главное меню', True, BLACK)
@@ -147,6 +154,7 @@ while True:
                     curbutt_num = 1
                     title = titleFont.render('Главное меню', True, BLACK)
                     mode = 'Main Menu'
+                    play_music_main_menu(mode)
                     break
 
         for spike in spikes_Group:
@@ -154,6 +162,7 @@ while True:
                 curbutt_num = 1
                 title = titleFont.render('Главное меню', True, BLACK)
                 mode = 'Main Menu'
+                play_music(mode)
                 hero.x = nest_rect.x + nest_rect.width // 4
                 hero.y = nest_rect.y - nest_rect.height // 2
                 hero.xspeed, hero.yspeed = 0, 0
@@ -161,6 +170,7 @@ while True:
         for egg in egg_Group:
             if egg.rect.colliderect(hero.rect):
                 mode = 'Main Menu'
+                play_music(mode)
                 hero.x = nest_rect.x + nest_rect.width // 4
                 hero.y = nest_rect.y - nest_rect.height // 2
                 hero.xspeed, hero.yspeed = 0, 0
@@ -229,5 +239,6 @@ while True:
                     clear_level()
                     draw_level(level_map)
                     mode = 'Game'
+                    play_music(mode)
                     wait(1)
                     break
