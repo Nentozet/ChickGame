@@ -13,8 +13,8 @@ class Button(pygame.sprite.Sprite):
     def __init__(self, group, text, num):
         self.text = text
         self.num = num
-        self.x = W-500
-        self.y = H//4 + 86*(self.num-1)
+        self.x = W - 500
+        self.y = H // 4 + 86 * (self.num - 1)
         self.font = pygame.font.SysFont('comicsansms', 36)
         pygame.sprite.Sprite.__init__(self)
         self.image = self.font.render(self.text, True, BLACK)
@@ -26,4 +26,3 @@ class Button(pygame.sprite.Sprite):
             self.image = self.font.render(self.text, True, WHITE, BLACK)
         else:
             self.image = self.font.render(self.text, True, BLACK)
-
