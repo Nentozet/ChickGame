@@ -1,12 +1,12 @@
 import pygame
 import ctypes
-from Dirt import Grass_Dirt, Dirt
+from Dirt import GrassDirt, Dirt
 from Ice import Ice
 from Spike import Spike
 from Chick import Chick
 from Wait import wait
 from Egg import Egg
-from Button import Button
+from ButtonTypes import Button
 import Saving
 
 pygame.init()
@@ -33,7 +33,6 @@ pygame.mixer.music.set_volume(musicvolume)
 
 skyimg = pygame.image.load('Assets/Images/sky.png').convert_alpha()
 skyimg = pygame.transform.scale(skyimg, (W, H))
-
 
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
@@ -77,7 +76,7 @@ def draw_level(lev_map):
     for i in range(len(lev_map)):
         for j in range(len(lev_map[i])):
             if lev_map[i][j] == '1':
-                Grass_Dirt(j * H // 24, (i + 1) * H // 24, H // 24, platform_Group)
+                GrassDirt(j * H // 24, (i + 1) * H // 24, H // 24, platform_Group)
             elif lev_map[i][j] == '2':
                 Dirt(j * H // 24, (i + 1) * H // 24, H // 24, platform_Group)
             elif lev_map[i][j] == '3':
@@ -122,6 +121,7 @@ def select_level_draw():
     levelButts_Group.draw(sc)
     pygame.display.update()
 
+
 def play_music(game_mode):
     if game_mode == 'Game':
         pygame.mixer.music.load('Assets/Sounds/Game_Music.mp3')
@@ -129,6 +129,7 @@ def play_music(game_mode):
         pygame.mixer.music.load('Assets/Sounds/Grass.mp3')
     pygame.mixer.music.set_volume(musicvolume)
     pygame.mixer.music.play(-1)
+
 
 def clear_level():
     platform_Group.empty()
@@ -154,7 +155,9 @@ while True:
                     curbutt_num = 1
                     title = titleFont.render('Главное меню', True, BLACK)
                     mode = 'Main Menu'
-                    play_music_main_menu(mode)
+                    hero.x = nest_rect.x + nest_rect.width // 4
+                    hero.y = nest_rect.y - nest_rect.height // 2
+                    play_music(mode)
                     break
 
         for spike in spikes_Group:
@@ -185,6 +188,8 @@ while True:
             if event.type == pygame.QUIT:
                 exit()
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    exit()
                 if event.key == pygame.K_s:
                     if curbutt_num == len(mainButts_Group):
                         curbutt_num = 1
@@ -214,6 +219,11 @@ while True:
             if event.type == pygame.QUIT:
                 exit()
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    curbutt_num = 1
+                    title = titleFont.render('Главное меню', True, BLACK)
+                    mode = 'Main Menu'
+                    break
                 if event.key == pygame.K_s:
                     if curbutt_num == len(levelButts_Group):
                         curbutt_num = 1
