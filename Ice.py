@@ -1,5 +1,7 @@
 import pygame
+
 pygame.init()
+
 
 class Ice(pygame.sprite.Sprite):
     def __init__(self, x, y, size, platform_list, ice_list):
