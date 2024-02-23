@@ -26,20 +26,3 @@ class Button(pygame.sprite.Sprite):
         else:
             self.image = self.font.render(self.text, True, BLACK)
 
-
-class Slider(pygame.sprite.Sprite):
-    def __init__(self, num, value):
-        self.font = pygame.font.SysFont('comicsansms', 36)
-        self.num = num
-        self.value = value
-        self.x = W - 500
-        self.y = H // 4 + 86 * (self.num - 1)
-        self.surf = pygame.Surface((350, 36))
-        pygame.sprite.Sprite.__init__(self)
-        self.image = self.surf
-        self.rect = self.surf.get_rect(topleft=(self.x, self.y))
-
-    def update(self, value):
-        None
-
-
